@@ -1,6 +1,7 @@
 package sml.instruction;
 
 import sml.Instruction;
+import sml.Labels;
 import sml.Machine;
 import sml.RegisterName;
 
@@ -32,7 +33,8 @@ public class JnzInstruction extends Instruction {
         if (reg != 0) {
             List<Instruction> prog = m.getProgram();
             for (int i = 0; i < prog.size(); i++) {
-                if (prog.get(i).getLabel() == this.targetLabel){
+                String currentLabel = prog.get(i).getLabel();
+                if (this.targetLabel.equals(currentLabel)){
                     return i;
                 }
             }
