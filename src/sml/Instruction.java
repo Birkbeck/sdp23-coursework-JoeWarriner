@@ -53,5 +53,9 @@ public abstract class Instruction {
 	@Override
 	public abstract String toString();
 
+	public abstract boolean equals();
+
+	public abstract int hashCode();
+
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
 }
