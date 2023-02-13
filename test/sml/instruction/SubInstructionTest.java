@@ -7,7 +7,7 @@ import sml.Instruction;
 import static sml.Registers.Register.*;
 
 
-public class  SubInstructionTest extends InstructionTest {
+public class SubInstructionTest extends InstructionTest {
 
     @Test
     void executeValid() {
