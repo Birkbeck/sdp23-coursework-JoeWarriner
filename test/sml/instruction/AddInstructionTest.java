@@ -11,22 +11,7 @@ import sml.Registers;
 
 import static sml.Registers.Register.*;
 
-class AddInstructionTest {
-  private Machine machine;
-  private Registers registers;
-
-  @BeforeEach
-  void setUp() {
-    machine = new Machine(new Registers());
-    registers = machine.getRegisters();
-    //...
-  }
-
-  @AfterEach
-  void tearDown() {
-    machine = null;
-    registers = null;
-  }
+class AddInstructionTest extends  InstructionTest {
 
   @Test
   void executeValid() {
