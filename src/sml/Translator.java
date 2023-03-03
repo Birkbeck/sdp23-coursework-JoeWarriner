@@ -4,9 +4,12 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static sml.Registers.Register;
 
@@ -52,6 +55,18 @@ public final class Translator {
         }
     }
 
+    private static final Map<String, Class<?>> INSTRUCTION_LOOKUP =  Map.of(
+            "add", AddInstruction.class,
+            "sub", SubInstruction.class,
+            "div", DivInstruction.class,
+            "jnz", JnzInstruction.class,
+            "mov", MovInstruction.class,
+            "mul", MulInstruction.class,
+            "out", OutInstruction.class
+
+    );
+
+
     /**
      * Translates the current line into an instruction with the given label
      *
@@ -64,57 +79,22 @@ public final class Translator {
     private Instruction getInstruction(String label) {
         if (line.isEmpty())
             return null;
-
-        String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case SubInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case MulInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case DivInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case OutInstruction.OP_CODE -> {
-                String s = scan();
-                return new OutInstruction(label, Register.valueOf(s));
-            }
-            case MovInstruction.OP_CODE -> {
-                String t = scan();
-                String i = scan();
-                return new MovInstruction(label, Register.valueOf(t), i);
-            }
-            case JnzInstruction.OP_CODE -> {
-                String t = scan();
-                String l = scan();
-                return new JnzInstruction(label, Register.valueOf(t), l);
-            }
-
-
-            // TODO: add code for all other types of instructions
-
-            // TODO: Then, replace the switch by using the Reflection API
-
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
-
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
-            }
+        try {
+            String opcode = scan();
+            Class<?> instructionClass = INSTRUCTION_LOOKUP.get(opcode);
+            Constructor<?> constructor = Arrays.stream(instructionClass.getDeclaredConstructors()).findFirst().orElseThrow();
+            Object[] args = Stream.concat(Stream.of(label), Arrays.stream(constructor.getParameterTypes()).skip(1)
+                    .map((t) -> t.equals(RegisterName.class) ? Register.valueOf(scan()) : scan())).toArray();
+            return (Instruction) constructor.newInstance(args);
+        } catch (Exception e) {
+            return null;
         }
-        return null;
+
+
+//            // TODO: Next, use dependency injection to allow this machine class
+//            //       to work with different sets of opcodes (different CPUs)
+//
+//
     }
 
 
