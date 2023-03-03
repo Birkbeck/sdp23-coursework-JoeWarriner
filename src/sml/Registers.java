@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 
 /**
- *
+ * Replicates the registers in a physical processor.
+ * i.e. container for data
  *
  * @author ...
  */
