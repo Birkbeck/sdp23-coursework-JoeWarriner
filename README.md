@@ -195,11 +195,11 @@ There are two components to this coursework assignment.
    remove the explicit calls to the subclasses and the `switch` statement. 
    This will allow the SML language to be extended without having to modify the original code.
 
-2. Modify the source code to use *dependency injection*, the *singleton* design pattern, 
+3. Modify the source code to use *dependency injection*, the *singleton* design pattern, 
    and *factory* classes, where you deem appropriate. (You are allowed to use other 
    design patterns if you consider them necessary.)
 
-3. Apart from the specific code mentioned above you should not modify other classes.
+4. Apart from the specific code mentioned above you should not modify other classes.
 
 All of these parts of the coursework should be fully tested (you do not need to provide 
 tests for the original codebase).

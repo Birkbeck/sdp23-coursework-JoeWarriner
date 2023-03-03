@@ -65,8 +65,8 @@ public abstract class Instruction {
 	@Override
 	public abstract String toString();
 
-	public abstract boolean equals();
+	// public abstract boolean equals();
 
-	public abstract int hashCode();
+	// public abstract int hashCode();
 
 }
