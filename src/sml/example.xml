@@ -1,0 +1,9 @@
+<instructions>
+    <instruction opcode="add" classname="sml.instruction.AddInstruction" />
+    <instruction opcode="sub" classname="sml.instruction.SubInstruction" />
+    <instruction opcode="mul" classname="sml.instruction.MulInstruction" />
+    <instruction opcode="div" classname="sml.instruction.DivInstruction" />
+    <instruction opcode="jnz" classname="sml.instruction.JnzInstruction" />
+    <instruction opcode="out" classname="sml.instruction.OutInstruction" />
+    <instruction opcode="mov" classname="sml.instruction.MovInstruction" />
+</instructions>
