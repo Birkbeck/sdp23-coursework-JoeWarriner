@@ -3,9 +3,11 @@ package sml;
 // TODO: write a JavaDoc for the class
 
 /**
- * Represents an abstract instruction.
+ * Abstract instruction class.
  *
- * @author ...
+ * Represents an instruction for SML. Implemented by various instruction types.
+ *
+ * @author Joe Warriner
  */
 public abstract class Instruction {
 	protected final String label;
@@ -23,13 +25,22 @@ public abstract class Instruction {
 		this.opcode = opcode;
 	}
 
+	/**
+	 * Returns the operation label.,
+	 * @return operation label
+	 */
 	public String getLabel() {
 		return label;
 	}
 
+	/**
+	 * Returns the opcode.
+	 * @return opcode
+	 */
 	public String getOpcode() {
 		return opcode;
 	}
+
 
 	public static int NORMAL_PROGRAM_COUNTER_UPDATE = -1;
 
@@ -56,9 +67,8 @@ public abstract class Instruction {
 	@Override
 	public abstract String toString();
 
-//	public abstract boolean equals();
-//
-//	public abstract int hashCode();
+	public abstract boolean equals();
 
-	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+	public abstract int hashCode();
+
 }
