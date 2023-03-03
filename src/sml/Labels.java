@@ -19,9 +19,11 @@ public final class Labels {
 	 * @param label the label
 	 * @param address the address the label refers to
 	 */
-	public void addLabel(String label, int address) {
+	public void addLabel(String label, int address)  {
 		Objects.requireNonNull(label);
-		// TODO: Add a check that there are no label duplicates.
+		if (labels.containsKey(label)) {
+			throw new IllegalArgumentException("Label '" + label + "' is duplicated.");
+		}
 		labels.put(label, address);
 	}
 
