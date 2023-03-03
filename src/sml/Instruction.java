@@ -48,8 +48,11 @@ public abstract class Instruction {
 		return (getLabel() == null) ? "" : getLabel() + ": ";
 	}
 
-	// TODO: What does abstract in the declaration below mean?
-	//       (Write a short explanation.)
+	/*
+	Subclasses must provide implementations of methods that are declared as abstract.
+	(Or be abstract classes themselves).
+	In practice this means that subclasses of Instruction must override toString.
+	 */
 	@Override
 	public abstract String toString();
 
