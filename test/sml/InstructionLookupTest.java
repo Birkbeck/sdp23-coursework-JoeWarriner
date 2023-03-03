@@ -10,8 +10,8 @@ public class InstructionLookupTest {
 
     @Test
     void testLookupBuilder() throws IOException {
-        InstructionLookup testLookup = new InstructionLookup("src/sml/example.xml");
-        Assertions.assertEquals(AddInstruction.class, testLookup.get("add"));
+        Language.importLanguage("src/sml/example.xml");
+        Assertions.assertEquals(AddInstruction.class, Language.get("add"));
 
     }
 }

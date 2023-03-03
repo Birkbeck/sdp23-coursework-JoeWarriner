@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Locale;
-
-import static sml.Registers.Register;
 
 public class TranslatorTest {
 
@@ -21,9 +18,8 @@ public class TranslatorTest {
         getInstruction.setAccessible(true);
         Field lineField = translatorClass.getDeclaredField("line");
         lineField.setAccessible(true);
-        InstructionLookup il = new InstructionLookup("src/sml/example.xml");
-        Object[] args = {"filename", il};
-        Translator testTranslator = translatorClass.getDeclaredConstructor(String.class, InstructionLookup.class).newInstance(args);
+        Language.importLanguage("src/sml/example.xml");
+        Translator testTranslator = translatorClass.getDeclaredConstructor(String.class).newInstance("filename");
         lineField.set(testTranslator, "add EAX EBX");
         Object outputInstruction = getInstruction.invoke(testTranslator, "");
         Assertions.assertTrue(outputInstruction instanceof AddInstruction);
