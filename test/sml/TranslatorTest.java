@@ -20,7 +20,9 @@ public class TranslatorTest {
         getInstruction.setAccessible(true);
         Field lineField = translatorClass.getDeclaredField("line");
         lineField.setAccessible(true);
-        Translator testTranslator = translatorClass.getDeclaredConstructor(String.class).newInstance("filename");
+        InstructionLookup il = new InstructionLookup();
+        Object[] args = {"filename", il};
+        Translator testTranslator = translatorClass.getDeclaredConstructor(String.class, InstructionLookup.class).newInstance(args);
         lineField.set(testTranslator, "add EAX EBX");
         Object outputInstruction = getInstruction.invoke(testTranslator, "");
         Assertions.assertTrue(outputInstruction instanceof AddInstruction);

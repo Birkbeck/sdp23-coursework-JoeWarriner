@@ -23,12 +23,14 @@ import static sml.Registers.Register;
 public final class Translator {
 
     private final String fileName; // source file of SML code
+    private InstructionLookup il;
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    public Translator(String fileName) {
+    public Translator(String fileName, InstructionLookup il) {
         this.fileName =  fileName;
+        this.il = il;
     }
 
     // translate the small program in the file into lab (the labels) and
@@ -55,16 +57,7 @@ public final class Translator {
         }
     }
 
-    private static final Map<String, Class<?>> INSTRUCTION_LOOKUP =  Map.of(
-            "add", AddInstruction.class,
-            "sub", SubInstruction.class,
-            "div", DivInstruction.class,
-            "jnz", JnzInstruction.class,
-            "mov", MovInstruction.class,
-            "mul", MulInstruction.class,
-            "out", OutInstruction.class
 
-    );
 
 
     /**
@@ -81,7 +74,7 @@ public final class Translator {
             return null;
         try {
             String opcode = scan();
-            Class<?> instructionClass = INSTRUCTION_LOOKUP.get(opcode);
+            Class<?> instructionClass = il.get(opcode);
             Constructor<?> constructor = Arrays.stream(instructionClass.getDeclaredConstructors()).findFirst().orElseThrow();
             Object[] args = Stream.concat(Stream.of(label), Arrays.stream(constructor.getParameterTypes()).skip(1)
                     .map((t) -> t.equals(RegisterName.class) ? Register.valueOf(scan()) : scan())).toArray();
